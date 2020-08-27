@@ -4,7 +4,9 @@ import { Location } from '@angular/common';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-hero-detail',
@@ -12,9 +14,10 @@ import { Subject } from 'rxjs';
   styleUrls: [ './hero-detail.component.css' ]
 })
 export class HeroDetailComponent implements OnInit {
-  hero: Hero;
-  private idSearch = new Subject<number>();
 
+  hero$: Observable<Hero>;
+
+  //hero: Hero;
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
@@ -22,22 +25,27 @@ export class HeroDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getHero();
+    this.hero$ = this.route.params.pipe(
+      switchMap(({id}) => this.heroService.getHero(id))
+    );
   }
-
+/*
   getHero(): void {
-    //const id = +this.route.snapshot.paramMap.get('id');
-    const id = this.idSearch.next(+this.route.snapshot.paramMap.get('id'));
+    const ids = +this.route.snapshot.paramMap.get('id');
+    this.id = this.idSearch.next(+this.hero.id);
     this.heroService.getHero(id)
       .subscribe(hero => this.hero = hero);
-  }
 
+
+  }
+ */
   goBack(): void {
     this.location.back();
   }
 
-  save(): void {
-    this.heroService.updateHero(this.hero)
+  save(hero: Hero): void {
+    console.log(hero);
+    this.heroService.updateHero(hero)
       .subscribe(() => this.goBack());
   }
 }
