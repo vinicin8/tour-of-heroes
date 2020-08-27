@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-hero-detail',
@@ -12,6 +13,7 @@ import { HeroService } from '../hero.service';
 })
 export class HeroDetailComponent implements OnInit {
   hero: Hero;
+  private idSearch = new Subject<number>();
 
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +26,8 @@ export class HeroDetailComponent implements OnInit {
   }
 
   getHero(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    //const id = +this.route.snapshot.paramMap.get('id');
+    const id = this.idSearch.next(+this.route.snapshot.paramMap.get('id'));
     this.heroService.getHero(id)
       .subscribe(hero => this.hero = hero);
   }
