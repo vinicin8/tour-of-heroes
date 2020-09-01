@@ -13,6 +13,10 @@ import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +26,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     MessagesComponent,
     DashboardComponent,
     HeroSearchComponent,
-  ],
+      ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,6 +36,10 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
       InMemoryDataService, { dataEncapsulation: false }
     ),
     NgxSkeletonLoaderModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-left',
+    }),
   ],
   bootstrap: [AppComponent]
 

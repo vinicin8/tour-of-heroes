@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
 
   getHeroes(): void {
-   this.heroesSubscription = this.heroService.getHeroes().pipe(delay(4000), tap(() => this.display = true))
+   this.heroesSubscription = this.heroService.getHeroes().pipe(delay(2000), tap(() => this.display = true))
       .subscribe(heroes => this.heroes = heroes.slice(1, 5));
 
   }

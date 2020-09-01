@@ -4,7 +4,7 @@ import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
+import { delay, tap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-heroes',
@@ -14,7 +14,7 @@ import { filter } from 'rxjs/operators';
 export class HeroesComponent implements OnInit, OnDestroy {
   heroes: Hero[];
   heroesSubscription: Subscription;
-
+  display2 = false;
   constructor(private heroService: HeroService) { }
 
   ngOnInit() {
@@ -22,7 +22,8 @@ export class HeroesComponent implements OnInit, OnDestroy {
   }
 
   getHeroes(): void {
-    this.heroesSubscription = this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
+    this.heroesSubscription = this.heroService.getHeroes().pipe(delay(2000), tap(() => this.display2 = true))
+    .subscribe(heroes => this.heroes = heroes);
 
   }
 
