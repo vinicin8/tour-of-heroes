@@ -1,8 +1,8 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
-import { Subscription, Observable, Subject } from 'rxjs';
-import { delay, tap, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 
 
 
@@ -17,12 +17,9 @@ export class DashboardComponent implements OnInit {
   constructor(private heroService: HeroService) { }
   display = false;
 
+
   ngOnInit() {
     this.getHeroes();
-    /*setTimeout(() => {
-      this.display = true;
-    }, 4000);
-   */
   }
 
 

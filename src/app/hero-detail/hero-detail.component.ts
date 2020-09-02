@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../hero.service';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operato
 })
 export class HeroDetailComponent implements OnInit {
 
-  //hero: Hero;
+
   hero$: Observable<Hero>;
 
 
@@ -25,15 +25,11 @@ export class HeroDetailComponent implements OnInit {
     private location: Location
   ) { }
 
-  /*getHero(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.heroService.getHero(id).subscribe(hero$ => this.hero = hero$);
-  }*/
 
   ngOnInit(): void {
     this.hero$ = this.route.params.pipe(
       switchMap(({id}) => this.heroService.getHero(id))
-      );
+    );
 
   }
 

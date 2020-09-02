@@ -2,9 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { delay, tap, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { delay, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-heroes',
@@ -37,8 +36,10 @@ export class HeroesComponent implements OnInit, OnDestroy {
   }
 
   delete(hero: Hero): void {
-    this.heroes = this.heroes.filter(h => h !== hero);
-    this.heroService.deleteHero(hero).subscribe();
+    if (window.confirm(`Você realmente quer deletar o ${hero.name}?`)) {
+      this.heroes = this.heroes.filter(h => h !== hero);
+      this.heroService.deleteHero(hero).subscribe();
+    }
   }
 
 
