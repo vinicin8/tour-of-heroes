@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import { Subscription } from 'rxjs';
-import { delay, tap} from 'rxjs/operators';
+import { delay, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-heroes',
@@ -11,27 +11,32 @@ import { delay, tap} from 'rxjs/operators';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit, OnDestroy {
+
   heroes: Hero[];
   heroesSubscription: Subscription;
   display2 = false;
+
   constructor(private heroService: HeroService) { }
 
   ngOnInit() {
     this.getHeroes();
   }
 
+  ngOnDestroy() {
+    this.heroesSubscription.unsubscribe();
+  }
+
   getHeroes(): void {
     this.heroesSubscription = this.heroService.getHeroes().pipe(delay(2000), tap(() => this.display2 = true))
-    .subscribe(heroes => this.heroes = heroes);
-
+      .subscribe(heroes => this.heroes = heroes);
   }
 
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
     this.heroService.addHero({ name } as Hero).subscribe(heroes => {
-        this.heroes.push(heroes);
-      });
+      this.heroes.push(heroes);
+    });
 
   }
 
@@ -42,9 +47,4 @@ export class HeroesComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
-  ngOnDestroy() {
-    this.heroesSubscription.unsubscribe();
-  }
 }

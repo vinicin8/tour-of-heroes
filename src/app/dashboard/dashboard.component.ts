@@ -9,25 +9,24 @@ import { delay, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.css' ]
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
   heroes: Hero[] = [];
   heroesSubscription: Subscription;
-  constructor(private heroService: HeroService) { }
   display = false;
 
+  constructor(private heroService: HeroService) { }
 
   ngOnInit() {
     this.getHeroes();
   }
 
-
-
-
   getHeroes(): void {
-   this.heroesSubscription = this.heroService.getHeroes().pipe(delay(2000), tap(() => this.display = true))
+    this.heroesSubscription = this.heroService.getHeroes().pipe(delay(2000), tap(() => this.display = true))
       .subscribe(heroes => this.heroes = heroes.slice(1, 5));
 
   }
+
 }
