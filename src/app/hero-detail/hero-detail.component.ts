@@ -4,7 +4,7 @@ import { Hero } from '../hero';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../hero.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 
@@ -15,9 +15,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class HeroDetailComponent implements OnInit {
 
-
   hero$: Observable<Hero>;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -25,16 +23,12 @@ export class HeroDetailComponent implements OnInit {
     private location: Location
   ) { }
 
-
   ngOnInit(): void {
     this.hero$ = this.route.params.pipe(
-      switchMap(({id}) => this.heroService.getHero(id))
+      switchMap(({ id }) => this.heroService.getHero(id))
     );
 
   }
-
-
-
 
   goBack(): void {
     this.location.back();
