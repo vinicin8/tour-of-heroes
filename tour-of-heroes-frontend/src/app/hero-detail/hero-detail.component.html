@@ -1,0 +1,13 @@
+<div *ngIf="hero$ | async as hero">
+    <h2>{{hero.name | uppercase}} - Detalhes</h2>
+    <div class="detailID">
+        <label>ID: </label>{{hero.id}}
+        <br/>
+        <label>Nome:
+            <input [(ngModel)]="hero.name" placeholder="name" />
+        </label>
+    </div>
+    <button (click)="save(hero)">Salvar</button>
+    <br/>
+    <button (click)="goBack()">Voltar</button>
+</div>

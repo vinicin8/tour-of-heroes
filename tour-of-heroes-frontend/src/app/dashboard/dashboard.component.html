@@ -1,0 +1,47 @@
+<h3 *ngIf='display'>Top Heroes</h3>
+<h3><ngx-skeleton-loader  *ngIf='!display'
+ [theme]="{
+   width: '6em',
+   height: '1.5em'
+ }">
+
+ </ngx-skeleton-loader></h3>
+<body>
+
+<div class="grid grid-pad">
+
+<ngx-skeleton-loader  *ngIf='!display' count="4"
+    [theme]="{
+      'border-radius': '5px',
+      height: '100px',
+      border: '1px solid white',
+      width: '23%', height: '100px',
+      'margin-left': '1%'
+    }">
+ </ngx-skeleton-loader>
+
+  <a *ngFor="let hero of heroes" class="col-1-4"
+      routerLink="/detail/{{hero.id}}">
+
+
+    <div *ngIf='display' class="module hero">
+      <h4>{{hero.name}}</h4>
+    </div>
+
+
+  </a>
+
+</div>
+
+<ngx-skeleton-loader  *ngIf='!display' count='2'
+ [theme]="{
+   width: '8em',
+   height: '1.5em',
+   'margin-right': '100%',
+   padding: '.3em 0'
+
+ }">
+ </ngx-skeleton-loader>
+
+<app-hero-search *ngIf='display'></app-hero-search>
+</body>
